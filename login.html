@@ -284,47 +284,32 @@ document.body.appendChild(script);
 }
 
 function handleLogin(response) {
-  // Get the entered password
   const password = document.getElementById('loginPassword').value.trim();
-  const name = response.name;
-  // console.log(name)
-  // Assuming response contains the correct user data
+
   if (response.status === "success" && response.matching_rows && response.matching_rows.length > 0) {
-    
     const userData = response.matching_rows[0];
-    // console.log("Login Success");
-    // console.log(userData);
 
-    // Check password and account status
     if (userData.password.trim() === password && userData.idstatus === "active") {
-      console.log("Password Match and Access Granted");
-      const documentNumber = userData["Document Number"]
-      console.log(documentNumber)
-      // Generate a secure token for redirection (hashed value with email and secret key)
-      const token = generateSecureToken(userData.email,userData.name,documentNumber); // For example, using email or user ID
-      console.log(userData.name)
-      // alert(token)
+      console.log("Login Success");
 
-      // Store the session token in session storage
-      sessionStorage.setItem('userToken', token);
-      sessionStorage.setItem('userloginid', documentNumber)
-      sessionStorage.setItem('userName', userData.name)
-      sessionStorage.setItem('useremail_we', userData.email)
-      console.log(documentNumber)
-      // Redirect to the secure page with the token
-      window.location.href = `http://127.0.0.1:5500/index.html?token=${token}`;
-      console.log(token);
+      // ✅ Instead of token/session logic → just redirect
+      alert(`Welcome, ${userData.name}!`);
+      window.location.href = "index.html";
+
     } else {
-      alert("Access Denied: Either password is incorrect or account is not active");
-      loginsubmit.innerHTML = "Login";  // Set button text to "Loading..."
-    loginsubmit.disabled = false; 
+      alert("Access Denied: Incorrect password or inactive account");
+      resetLoginButton();
     }
   } else {
-    console.log("Login Failed");
-    alert("Login Failed because either username or password not matched.");
-    loginsubmit.innerHTML = "Login";  // Set button text to "Loading..."
-    loginsubmit.disabled = false; 
+    alert("Login Failed: Username or password not matched.");
+    resetLoginButton();
   }
+}
+
+function resetLoginButton() {
+  let loginsubmit = document.getElementById("loginsubmit");
+  loginsubmit.innerHTML = "Login";
+  loginsubmit.disabled = false;
 }
 
 // Function to generate a secure token (using email + secret key)
@@ -409,3 +394,4 @@ function emailcheck(response) {
 
 </body>
 </html>
+
