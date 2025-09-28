@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt Voucher</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+  <div class="container mt-4">
+    <div class="card text-start">
+      <div class="card-header">
+        Sale Voucher
+      </div>
+      <div class="card-body">
+        <div id="status" class="mb-3"></div>
+        <form id="receiptForm" class="tosendtransa___" method="POST" autocomplete="off">
+          <div class="form-group row">
+            <label for="glAccount" class="col-sm-2 col-form-label">G/L Account:</label>
+            <input type="hidden" name="Transaction Behavior" value="Transaction">
+                <div class="col-sm-4">
+                <!-- <div class="form-group col-md-4"> -->
+                    <!-- <label for="companyInput" class="form-label">Profit Center</label> -->
+                    <input type="text" 
+                        class="form-control" 
+                        list="GL_List"
+                        name="GL Account"     
+                        data-fetch_column
+                        data-filter-by = "Sales Account" 
+                        data-sheet_name="receiptForm" 
+                        data-column_name="offsettingAccount[]" 
+                        
+                        id="custoemrform_Project" required>
+            
+                    <datalist id="GL_List">
+                    <!-- Options will be dynamically added here -->
+                    </datalist>
+                <!-- </div  > -->
+                </div>
+            <label for="Invoice" class="col-sm-2 col-form-label">Invoice No:</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control"  id="Invoice" name="Invoice" readonly>
+            </div>
+          </div>
+          <input type="hidden" id="permanentText" name="documenttype" value="SALES">
+          <div class="form-group row">
+            <label for="InvoiceDate" class="col-sm-2 col-form-label">Invoice Date:</label>
+            <div class="col-sm-4">
+              <input type="date" class="form-control" id="InvoiceDate" name="InvoiceDate">
+            </div>
+            <label for="OrderDate" class="col-sm-2 col-form-label">Order Date:</label>
+            <div class="col-sm-4">
+              <input type="date" class="form-control" id="OrderDate" name="OrderDate">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="project" class="col-sm-2 col-form-label">Project:</label>
+            <div class="col-sm-4">
+              <input type="text" 
+                       class="form-control" 
+                       list="profitcenter"
+                       name="Profit Center"     
+                       data-fetch_column 
+                       data-sheet_name="ProjectForm" 
+                       data-column_name="ProjectCode" 
+                       
+                       id="custoemrform_Project" required>
+        
+                <datalist id="profitcenter">
+                  <!-- Options will be dynamically added here -->
+                </datalist>
+            </div>
+            <label for="companycode" class="col-sm-2 col-form-label">Company Code:</label>
+            <div class="col-sm-4">
+              <input type="text" 
+                       class="form-control" 
+                       list="company list"
+                       name="Company Name"     
+                       data-fetch_column 
+                       data-sheet_name="companyForm" 
+                       data-column_name="CompanyCode" 
+                       
+                       id="custoemrform_Project" required>
+        
+                <datalist id="company list">
+                  <!-- Options will be dynamically added here -->
+                </datalist>
+            </div>
+          </div>
+          <!-- Table for credit entries -->
+          <div class="table-responsive table-sm text-start">
+            <table class="table mt-4" id="creditEntryTable">
+                <thead>
+                  <tr class="text-start">
+                    <th>Item name</th>
+                    <th>Rate</th>
+                    <th>Quantity</th>
+                    <th>Narration</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="creditEntryTableBody">
+                  <tr class="credit-entry-row"  >
+                    <td>
+                      <input type="text" 
+                             class="form-control" 
+                             list="stocklist"
+                             name="Profit Center"     
+                             data-fetch_column 
+                             data-sheet_name="Stock" 
+                             data-column_name="itemName" 
+                             required>
+                      <datalist id="stocklist">
+                        <!-- Options dynamically added -->
+                      </datalist>
+                    </td>
+              
+                    <td><input type="number" class="form-control rate" name="Rate" step="0.01"></td>
+                    <td><input type="number" class="form-control quantity" name="Quantity" step="1"></td>
+              
+                    <input type="hidden" class="form-control" name="Document Number">
+                    <input type="hidden" class="form-control" name="Description">
+                    <input type="hidden" class="form-control" name="ItemUnit">
+                    <input type="hidden" class="form-control" name="itemGroup">
+                    <input type="hidden" class="form-control" name="ItemTax">
+              
+                    <td><input type="text" class="form-control" name="narration" autocomplete="on"></td>
+                    <td><input type="text" class="form-control amount" name="Amount" autocomplete="on" readonly></td>
+                    <td><button type="button" class="btn btn-danger delete-row-button">Delete</button></td>
+                  </tr>
+                </tbody>
+              
+                <tfoot>
+                  <tr>
+                    <td>Total:</td>
+                    <td id="totalAmount" colspan="5">0.00</td>
+                  </tr>
+                </tfoot>
+              </table>
+          </div>
+          <!-- Buttons -->
+          <button type="button" class="btn btn-primary" id="addRowButton">Add Row</button>
+          <button type="submit" class="btn btn-success" id="submitButton">
+            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+<SCript>
+    
+
+
+    invoicegen()
+    function invoicegen() {
+    const prefix = "";
+    
+    // 4-digit alphanumeric
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let randomPart = '';
+    for (let i = 0; i < 4; i++) {
+        randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    const now = new Date();
+    const year = now.getFullYear().toString().slice(-2); // Last 2 digits of year
+    const timePart = 
+        String(now.getHours()).padStart(2, '0') +
+        String(now.getMinutes()).padStart(2, '0') +
+        String(now.getSeconds()).padStart(2, '0') +
+        String(now.getMilliseconds()).padStart(3, '0');
+
+    const uniqueInvoice = `${prefix}${randomPart}${year}${timePart}`;
+    document.getElementById('Invoice').value = uniqueInvoice;
+}
+
+newFunction()
+
+function newFunction() {
+  document.querySelectorAll('input[type="date"]').forEach(input => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayDate = `${yyyy}-${mm}-${dd}`;
+    input.value = todayDate;
+  });
+}
+
+
+
+
+</SCript>
+
+<script>
+    // Attach the event listener after the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+      const tableBody = document.getElementById("creditEntryTableBody");
+  
+      tableBody.addEventListener("input", function (event) {
+        const target = event.target;
+  
+        // Only proceed if the change is in rate or quantity
+        if (target.classList.contains("rate") || target.classList.contains("quantity")) {
+          const row = target.closest("tr"); // Get the row where the input happened
+          const rate = parseFloat(row.querySelector(".rate").value) || 0;
+          const qty = parseFloat(row.querySelector(".quantity").value) || 0;
+  
+          const amount = (rate * qty).toFixed(2);
+          row.querySelector(".amount").value = amount;
+  
+          updateTotal(); // Also update the total at the bottom
+        }
+      });
+  
+      // Optional: function to update total amount in footer
+      function updateTotal() {
+        let total = 0;
+        document.querySelectorAll(".amount").forEach(input => {
+          total += parseFloat(input.value) || 0;
+        });
+        document.getElementById("totalAmount").textContent = total.toFixed(2);
+      }
+    });
+  </script>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+</body>
+</html>
+
+
+  

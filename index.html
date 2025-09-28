@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniTax</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> -->
+     <link rel="icon" href="\assets\icons\20220609_183256.png">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> -->
+
+
+    
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Bundle (includes Popper.js and JS plugins) -->
+
+
+</head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<body>
+  
+      
+  <!-- loader -->
+  <div id="loader-container-main-window" class="loader-container">
+    <div id="spinner-{{timestamp}}" class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+    
+    
+    <nav class="navbar sticky-top navbar-expand-lg " id="mainnavbar">
+      <div class="container-fluid justify-content-between">
+          <div class="d-flex justify-content-start">
+            <!-- Hamburger Icon -->
+            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+              <i class="fa-solid fa-bars"></i>
+            </a>
+
+            <!-- Search Bar -->
+            
+            <!-- Right-aligned Links -->
+            <div class="logo_main mx-2">UniTax</div>
+          </div>
+          <div class="d-flex">
+            <form class="d-flex ml-3 p-0 align-items-center">
+                <input class="form-control mb-0" id="searchBox"  type="search" placeholder="Search here..." aria-label="Search" autocomplete="off">
+            </form>
+            <div onclick="UserProfile()" class="userprofile_name mx-2">
+              <i class="bi bi-person-circle"></i> <!-- optional icon -->
+              
+            </div>
+
+          </div>
+          
+
+
+
+          <!-- <ul class="navbar-nav ml-auto">
+
+              
+              <li class="nav-item mx-1">
+                  <a href="#" id="showNotificationButton" class="nav-link"><i class="icon fa fa-bell"></i></a>
+              </li>
+              <li class="nav-item mx-1">
+                  <a href="#" id="showNotificationButton" class="nav-link"><i class="icon fa fa-envelope"></i></a>
+              </li>
+              <li class="nav-item mx-1">
+                  <div class="form-check form-switch text-end mb-3">
+                    <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                    <label class="form-check-label" for="darkModeToggle">Dark Mode</label>
+                  </div>
+              </li>
+              <li class="nav-item ml-3">
+                <button id="logoutButton" class="btn btn-outline-primary">Logout</button>
+              </li>                              
+          </ul> -->
+          
+      </div>
+      
+    </nav>
+    
+      <!-- left navbar -->
+      <div class="container-fluid divs text-center homeview">
+        <div class="row view1">
+          <div class="col-sm-3 full-view" >
+            <div class="card my-3">
+              <div class="card-body text-start">
+                <div class="row">
+                  <div class="col-md-7 align-self-center">
+                    <strong class="lead">Good Day <br>
+                      <span class="text-primary font-weight-bolder username" id="username"></span>
+                    </strong>
+                    <h1 id="time"></h1>
+                    <h5 id="date"></h5>
+                  </div>
+                  
+                  <div class="col-md-5  align-middle time-img">
+                    <img src="https://img.freepik.com/free-vector/contemporary-workspace-flat-composition-with-man-sitting-futuristic-table-with-designer-chair-home-plant-illustration_1284-64045.jpg?w=740&t=st=1707650448~exp=1707651048~hmac=50baa1d708a1ade7c1734d7860656229a2d4c71d8a7e36ab5e8712f9482cc981" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <sections id="tasks">
+              <div class="card my-3 text-start">
+                <h5 class="card-header">Notes and Tasks</h5>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <form class="d-flex">
+                        <input class="form-control  " type="search" placeholder="Search" aria-label="Search">
+                        <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                      </form>
+                    </div>
+                    <div class="container">
+                      <div class="row justify-content-center">
+                          <div class="col" style="overflow: auto; scroll-behavior: smooth;">
+                            <table  class="table table-striped table-borderless table-sm caption-top ">
+                              <caption>Tasks</caption>
+                              <thead>
+                                <tr>
+                                  <th scope="col" >#</th>
+                                  <th scope="col">Task</th>
+                                  <th scope="col">Timestamp</th>
+                                  <th scope="col">Reminder</th>
+                                </tr>
+                              </thead>
+                              <tbody id="taskTableBody">
+                                <!-- Tasks will be inserted here -->
+                              </tbody>
+                            </table>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  </div>
+                </div>
+              </div>
+            </sections>
+            <sections id="logger">
+              <div class="card mt-3 text-start">
+                <h5 class="card-header">Logger</h5>
+                <div class="card-body p-0 m-0">
+                 <div id  ="logging"></div>
+                </div>
+              </div>
+            </sections>
+          </div>
+          <div class="col-sm-9 full-view right-side-window pt-3 " >
+            <div id="home" class="section">
+              <div class="dynamic-content" data-href="/Sections\adminhome.html">Home</div>
+              </div>
+            <div id="ccw" class="section">
+              <div class="dynamic-content" data-href="Sections\Creditorcreationwindow.html">Creditor Creation Window</div>
+            </div>
+            <div id="ob22" class="section">
+              <div class="dynamic-content" data-href="Sections\companycreationwindow.html">Company Creation Window</div>
+            </div>
+            <div id="dcw" class="section">
+              <div class="dynamic-content" data-href="Sections\debtorcreationwindow.html">Debtor Creation Window</div>
+            </div>
+            <div id="we" class="section">
+              <div class="dynamic-content" data-href="\Sections\receiptvoucher.html" data-script="\scripts\receiptvoucher.js">Receipt Voucher</div>
+            </div>
+            <div id="sales" class="section">
+              <div class="dynamic-content" data-href="\Sections\Salesvoucher.html" data-script="\scripts\salesvoucher.js">Sales Voucher</div>
+            </div>
+            <div id="purchase" class="section">
+              <div class="dynamic-content" data-href="\Sections\purchasevucher.html" data-script="\scripts\salesvoucher.js">Purchase Voucher</div>
+            </div>
+            <div id="go" class="section">
+              <div class="dynamic-content" data-href="\Sections\paymentvoucher.html" data-script="\scripts\payment.js">Payment Voucher</div>
+            </div>
+            <div id="lcw" class="section">
+              <div class="dynamic-content" data-href="\Sections\ledgercw.html" data-script="\scripts\lcw.js" >Ledger Creation Window</div>
+            </div>
+            <div id="fbl3n" class="section">
+              <div class="dynamic-content" data-href="\Sections\glview.html" data-script="\scripts\glview.js">Receipt Voucher</div>
+            </div>
+            
+            <div id="mw" class="section">
+              <div class="dynamic-content" data-href="\Sections\adminhome.html">Admin home</div>
+            </div>
+            <div id="dashboard" class="section">
+              <div class="dynamic-content" data-href="\Sections\dashboard.html">dashboard</div>
+            </div>
+            <div id="gopa" class="section">
+              <div class="dynamic-content" data-href="\Sections\companycreation.html">Company Creation</div>
+            </div>
+            <div id="uploader" class="section">
+              <div class="dynamic-content" data-href="/Sections/masteruploader.html" data-script="\scripts\masteruploader.js">Company Creation</div>
+            </div>
+            <div id="stock" class="section">
+              <div class="dynamic-content" data-href="\Sections\stockcreation.html" data-script="\scripts\receiptvoucher.js">Stock Creation Window</div>
+            </div>
+            <div id="purchasesum" class="section">
+              <div class="dynamic-content" data-href="\Sections\purchasesummery.html" data-script="\scripts\purchasesum.js">Stock Creation Window</div>
+            </div>
+            <div id="led" class="section">
+              <div class="dynamic-content" data-href="\Sections\ledgercreationwindow.html" data-script="\scripts\ccw.js">ledger Creation</div>
+            </div>
+            <div id="cot" class="section">
+              <div class="dynamic-content" data-href="\Sections\chartoftaxesgst.html" data-script="\scripts\ccw.js">ledger Creation</div>
+            </div>
+            <div id="ogls" class="section">
+              <div class="dynamic-content" data-href="\Sections\projectcreation.html" data-script="\scripts\ccw.js">Project Creation</div>
+            </div>
+            <div id="database" class="section">
+              <div class="dynamic-content" data-href="\Sections\database.html" data-script="\scripts\ccw.js">Temporary Database</div>
+            </div>
+            <div id="dsw" class="section">
+              <div class="dynamic-content" data-href="\Sections\datashowwizard.html" data-script="\scripts\datashowwizard.js">Data Show Window</div>
+            </div>
+            <div id="datatoshow" class="section">
+              <div class="dynamic-content" data-href="\Sections\GLCreation.html" data-script="\scripts\GLCreation.js">Data Show Window</div>
+            </div>
+            
+            <div id="ccw1" class="section">
+              <div class="dynamic-content" data-href="\Sections\customercreatewin.html" data-script="\scripts\ccw.js">Receipt Voucher</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div class="errornotification" id="errorNotificationBox">This is error</div>
+
+
+</body>
+
+
+
+
+
+
+<!-- sidebar
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Enable both scrolling & backdrop</button> -->
+<!-- Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas Example</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Nav Tabs -->
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Create</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Transactions</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Display</button>
+      </div>
+    </nav>
+
+    <!-- Tab Content -->
+    <div class="tab-content pt-3" id="nav-tabContent">
+      <!-- Tab 1: Create -->
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="card-body">
+          <h1>Creation</h1>
+          <ul>
+            <li><a href="#lcw" id="ledger-link" onclick="changeInitialSection(this)" class="d-block">Ledger</a></li>
+            <li><a href="#stock" id="stock-link" onclick="changeInitialSection(this)" class="d-block">Stock</a></li>
+            <li><a href="#gopa" id="company-link" onclick="changeInitialSection(this)" class="d-block">Company</a></li>
+            <li><a href="#ogls" id="profit-center-link" onclick="changeInitialSection(this)" class="d-block">Profit Center</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tab 2: Transactions -->
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <!-- <p>This is the Transactions tab content.</p> -->
+        <div class="card-body">
+          <h1>Transactions</h1>
+          <ul>
+            <li><a href="#we" id="ledger-link" onclick="changeInitialSection(this)" class="d-block">Receipt Voucher</a></li>
+            <li><a href="#go" id="stock-link" onclick="changeInitialSection(this)" class="d-block">Payment Voucher</a></li>
+            <li><a href="#sales" id="company-link" onclick="changeInitialSection(this)" class="d-block">Sales Voucher</a></li>
+            <li><a href="#purchase" id="profit-center-link" onclick="changeInitialSection(this)" class="d-block">Purchase Voucher</a></li>
+          </ul>
+        </div>  
+      </div>
+
+      <!-- Tab 3: Display -->
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <h1>Reports</h1>
+          <ul>
+            <li><a href="#dsw" id="ledger-link" onclick="changeInitialSection(this)" class="d-block">Data Show Wizard</a></li>
+            <li><a href="#fbl3n" id="stock-link" onclick="changeInitialSection(this)" class="d-block">Transaction Summery</a></li>
+            <!-- <li><a href="#sales" id="company-link" onclick="changeInitialSection(this)" class="d-block">Sales Voucher</a></li>
+            <li><a href="#purchase" id="profit-center-link" onclick="changeInitialSection(this)" class="d-block">Purchase Voucher</a></li> -->
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+
+<!-- toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+</div>
+
+<!-- /clac -->
+<!-- Calculator Modal -->
+<div class="modal fade" id="calculatorModal" tabindex="-1" role="dialog" aria-labelledby="calculatorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="calculatorModalLabel">Calculator</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" id="display" readonly>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('7')">7</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('8')">8</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('9')">9</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('/')">/</button>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('4')">4</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('5')">5</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('6')">6</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('*')">*</button>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('1')">1</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('2')">2</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('3')">3</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('-')">-</button>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('0')">0</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('.')">.</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="clearDisplay()">C</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="calculate()">=</button>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <button class="btn btn-secondary btn-block" onclick="appendToDisplay('+')">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- notification -->
+<div class="modal" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- <p>You can now receive push notifications.</p> -->
+               <div class="model-noti">
+                <div class="noticontainer">
+                    <div id="notiicon"><i class="fa fa-user"></i></div>
+                    <div id="notitextpart">
+                        <div id="id">tedt goes here</div>
+                        <div id="timestamp">12.00pm</div>
+                    </div>
+                </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+  
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalLabel">Add Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="taskForm">
+            <div class="mb-3">
+              <label for="taskInput" class="form-label">Task</label>
+              <input type="text" class="form-control" id="taskInput" required>
+            </div>
+            <div class="mb-3">
+              <label for="timestampInput" class="form-label">Timestamp</label>
+              <input type="datetime-local" class="form-control" id="timestampInput" required>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="reminderCheck">
+              <label class="form-check-label" for="reminderCheck">Set Reminder</label>
+            </div>
+            <div class="mb-3" id="reminderTimeInput" style="display: none;">
+              <label for="reminderTime" class="form-label">Reminder Time</label>
+              <input type="datetime-local" class="form-control" id="reminderTime">
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- short cut window -->
+<div class="modal fade" id="shortcutModal_5f2d8c9e" tabindex="-1" role="dialog" aria-labelledby="shortcutModalLabel_5f2d8c9e" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shortcutModalLabel_5f2d8c9e">Keyboard Shortcuts & Pages Reference</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 1.5rem;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+        <table class="table table-hover table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Code</th>
+              <th scope="col">Name</th>
+              <th scope="col">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">1</th><td>home</td><td>Home</td><td>Main dashboard or landing page</td></tr>
+            <tr><th scope="row">2</th><td>ccw</td><td>Creditor Creation Window</td><td>Used to create Supplier/Creditor Masters</td></tr>
+            <tr><th scope="row">3</th><td>ob22</td><td>Company Creation Window</td><td>Used for company master data creation</td></tr>
+            <tr><th scope="row">4</th><td>dcw</td><td>Debtor Creation Window</td><td>Used to create Customer masters</td></tr>
+            <tr><th scope="row">5</th><td>we</td><td>Receipt Voucher</td><td>Manage receipt vouchers</td></tr>
+            <tr><th scope="row">6</th><td>sales</td><td>Sales Voucher</td><td>Manage sales transactions</td></tr>
+            <tr><th scope="row">7</th><td>purchase</td><td>Purchase Voucher</td><td>Manage purchase transactions</td></tr>
+            <tr><th scope="row">8</th><td>go</td><td>Payment Voucher</td><td>Manage payments</td></tr>
+            <tr><th scope="row">9</th><td>lcw</td><td>Ledger Creation Window</td><td>Create ledger accounts</td></tr>
+            <tr><th scope="row">10</th><td>fbl3n</td><td>Receipt Voucher</td><td>Another receipt voucher interface</td></tr>
+            <tr><th scope="row">11</th><td>mw</td><td>Admin home</td><td>Admin dashboard or home</td></tr>
+            <tr><th scope="row">12</th><td>dashboard</td><td>Dashboard</td><td>Overall analytics and reports</td></tr>
+            <tr><th scope="row">13</th><td>gopa</td><td>Company Creation</td><td>Create company profiles</td></tr>
+            <tr><th scope="row">14</th><td>stock</td><td>Stock Creation Window</td><td>Manage stock items</td></tr>
+            <tr><th scope="row">15</th><td>led</td><td>Ledger Creation</td><td>Create ledger accounts</td></tr>
+            <tr><th scope="row">16</th><td>cot</td><td>Chart of Taxes GST</td><td>Manage tax chart</td></tr>
+            <tr><th scope="row">17</th><td>ogls</td><td>Project Creation</td><td>Create and manage projects</td></tr>
+            <tr><th scope="row">18</th><td>database</td><td>Temporary Database</td><td>Temporary storage or sandbox data</td></tr>
+            <tr><th scope="row">19</th><td>dsw</td><td>Data Show Window</td><td>Show data reports or views</td></tr>
+            <tr><th scope="row">20</th><td>datatoshow</td><td>Data Show Window</td><td>Alternate data display window</td></tr>
+            <tr><th scope="row">21</th><td>ccw1</td><td>Receipt Voucher</td><td>Another Customer Creation Window</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Unique modal for multipurpose -->
+<div id="customModalOverlay" class="custom-modal-overlay">
+  <div class="custom-modal">
+    <div class="custom-modal-header">
+      <h3 class="customModalTitle"></h3>
+      <span onclick="closeCustomModal()" style="cursor:pointer">&times;</span>
+    </div>
+    <div id="uniquemultimodal" class="custom-modal-body"></div>
+    <div id="uniquemodalfooter" class="custom-modal-footer"></div>
+  </div>
+</div>
+
+<div class="chat_fucntion">
+  <form  class="fetchAlone" id="Chat_Form" name="Chat Box">
+        <div class="card">
+          <!-- <div class="card-header px-4 align-items-center p-0">
+            <h3>Chat</h3>
+          </div> -->
+        <div class="card-body" style="min-height: 350px; bottom: 0px;">
+
+        </div>
+        <div class="card-footer">
+            <div class="row">
+              <div class="col-md-11">
+                <input type="text" placeholder="type here..." name="message" class="form-control">
+              </div>
+              <div class="col-md-1">
+                <button type="submit" class="btn btn-primary">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+</div>
+
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+<script src="/script.js"></script>
+<script src="/creditorcreationwindow.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<!-- <script src="/scripts/receiptvoucher.js"></script> -->
+
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collapsible Table</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    table {
+      table-layout: auto;
+      width: 100%;
+    }
+    td, th {
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body class="p-4">
+
+  <div class="container">
+    <h2 class="mb-4">Purchase Summary</h2>
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Sr. No</th>
+          <th>Document Number</th>
+          <th>GL</th>
+          <th>Total Taxable</th>
+          <th>Total Tax</th>
+          <th>Total Invoice</th>
+          <th>Toggle</th>
+        </tr>
+      </thead>
+      <tbody id="mainTableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const rawData = `Timestamp\tDocument Number\tDescription\tdocumenttype\tGL\tTransaction Behavior\tItemTax\tItemDocumentNumber\tItemUnit\tsubmission_id\tunique_code\tsheet_name\tcallback\tProfit Center\tCompany Name\tInvoice\tOrderDate\titemHSN\titemGroup\tInvoiceDate\tAmount\tRate\titemName\tnarration\tQuantity
+5/23/2025 23:23:45\tMZXGQ20250523232343\t500g Natural Organic Honey\tPURCHASE\t100000\tTransaction\t5\tSWKUL20250523021618\tPiece\tSUB-1748022824808\tZSEC79\tYMIBV20250523015244_PurchaseForm\tprocessServerReply\tA1B2C3\t1000\t5456\t2025-05-23\t409\tGrocery\t2025-05-23\t2000.00\t50\tSWKUL20250523021618\t\t40
+5/23/2025 23:23:54\tMFPCA20250523232349\t100% Pure Cotton Fabric, 10m\tPURCHASE\t100000\tTransaction\t5\tFFLPW20250523021508\tMeter\tSUB-1748022824808\tZSEC79\tYMIBV20250523015244_PurchaseForm\tprocessServerReply\tA1B2C3\t1000\t5456\t2025-05-23\t5208\tTextiles\t2025-05-23\t2400.00\t48\tFFLPW20250523021508\t\t50
+5/23/2025 23:33:37\tMCRNY20250523233336\t12W Energy-saving LED bulb\tPURCHASE\t100000\tTransaction\t12\tVEMQF20250523021438\tPiece\tSUB-1748023417888\t8GJ2ZB\tYMIBV20250523015244_PurchaseForm\tprocessServerReply\tD4E5F6\t1000\t54545187\t2025-05-23\t8539\tElectrical Goods\t2025-05-23\t500\t50\tVEMQF20250523021438\t\t10`;
+
+    const rows = rawData.trim().split("\n").map(r => r.split("\t"));
+    const headers = rows[0];
+    const data = rows.slice(1);
+
+    const grouped = {};
+    data.forEach(row => {
+      const submissionId = row[headers.indexOf("submission_id")];
+      if (!grouped[submissionId]) grouped[submissionId] = [];
+      grouped[submissionId].push(row);
+    });
+
+    const tableBody = document.getElementById("mainTableBody");
+    let srNo = 1;
+
+    Object.entries(grouped).forEach(([submissionId, rows]) => {
+      const docNumber = rows[0][headers.indexOf("Document Number")];
+      const gl = rows[0][headers.indexOf("GL")];
+
+      let totalTaxable = 0, totalTax = 0, totalInvoice = 0;
+      const innerRows = rows.map(row => {
+        const qty = parseFloat(row[headers.indexOf("Quantity")]);
+        const rate = parseFloat(row[headers.indexOf("Rate")]);
+        const taxRate = parseFloat(row[headers.indexOf("ItemTax")]);
+        const amount = qty * rate;
+        const tax = amount * taxRate / 100;
+        const total = amount + tax;
+        totalTaxable += amount;
+        totalTax += tax;
+        totalInvoice += total;
+        return `
+          <tr>
+            <td>${row[headers.indexOf("itemName")]}</td>
+            <td>${qty}</td>
+            <td>${rate}</td>
+            <td>${amount.toFixed(2)}</td>
+            <td>${taxRate}%</td>
+            <td>${total.toFixed(2)}</td>
+          </tr>`;
+      }).join("");
+
+      const mainRow = document.createElement("tr");
+      mainRow.innerHTML = `
+        <td>${srNo++}</td>
+        <td>${docNumber}</td>
+        <td>${gl}</td>
+        <td>${totalTaxable.toFixed(2)}</td>
+        <td>${totalTax.toFixed(2)}</td>
+        <td>${totalInvoice.toFixed(2)}</td>
+        <td><button class="btn btn-sm btn-primary" data-bs-toggle="collapse" data-bs-target="#collapse-${submissionId}">Toggle</button></td>
+      `;
+      tableBody.appendChild(mainRow);
+
+      const collapseRow = document.createElement("tr");
+      collapseRow.innerHTML = `
+        <td colspan="7" class="p-0">
+          <div id="collapse-${submissionId}" class="collapse">
+            <table class="table table-sm table-bordered m-0">
+              <thead>
+                <tr>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                  <th>Rate</th>
+                  <th>Amount</th>
+                  <th>Tax %</th>
+                  <th>Total Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${innerRows}
+              </tbody>
+            </table>
+          </div>
+        </td>
+      `;
+      tableBody.appendChild(collapseRow);
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
