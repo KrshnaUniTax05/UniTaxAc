@@ -934,92 +934,92 @@ const timestamp = new Date().getTime();
 
 
 
-// user verification 
-// document.addEventListener('DOMContentLoaded', function () {
-//   // Hide the page content until the token is verified
-//   document.body.style.display = 'none';
+user verification 
+document.addEventListener('DOMContentLoaded', function () {
+  // Hide the page content until the token is verified
+  document.body.style.display = 'none';
 
-//   // Get the token from the URL and session storage
-//   const urlParams = new URLSearchParams(window.location.search);
-//   const tokenFromUrl = urlParams.get('token'); // Extract token from URL
-//   // alert(tokenFromUrl + "URL")
-//   const sessionToken = sessionStorage.getItem('userToken'); // Get session token
-//   // alert(sessionToken + "LocalStorage")
+  // Get the token from the URL and session storage
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenFromUrl = urlParams.get('token'); // Extract token from URL
+  // alert(tokenFromUrl + "URL")
+  const sessionToken = sessionStorage.getItem('userToken'); // Get session token
+  // alert(sessionToken + "LocalStorage")
 
-//   // Session duration in milliseconds (30 minutes here for example)
-//   const SESSION_DURATION = 30 * 60 * 1000;
+  // Session duration in milliseconds (30 minutes here for example)
+  const SESSION_DURATION = 30 * 60 * 1000;
 
-//   // Validate the token
-//   if (tokenFromUrl && sessionToken) {
-//     // const tokenParts = tokenFromUrl.split(':');
-//     // if (tokenParts.length < 4) {
-//     //   alert("Invalid token format. Access denied.");
-//     //   handleInvalidToken();
-//     //   return;
-//     // }
+  // Validate the token
+  if (tokenFromUrl && sessionToken) {
+    // const tokenParts = tokenFromUrl.split(':');
+    // if (tokenParts.length < 4) {
+    //   alert("Invalid token format. Access denied.");
+    //   handleInvalidToken();
+    //   return;
+    // }
 
-//     const emailFromToken = sessionStorage.getItem('useremail_we');
-//     const randomStringFromToken = sessionStorage.getItem('userToken');
-//     const userloginname = sessionStorage.getItem('userName');
-//     const userloginid = sessionStorage.getItem('userloginid');
+    const emailFromToken = sessionStorage.getItem('useremail_we');
+    const randomStringFromToken = sessionStorage.getItem('userToken');
+    const userloginname = sessionStorage.getItem('userName');
+    const userloginid = sessionStorage.getItem('userloginid');
   
 
-//     console.log(emailFromToken, userloginid, userloginname);
-//     setuser(userloginname);
-// document.addEventListener("DOMContentLoaded",function(){
-//   const userIdElements = document.querySelectorAll('userId')
-//   userIdElements.forEach(function(userIdElement) {
-//     userIdElement.textContent = userloginid;
-// })
-// });
+    console.log(emailFromToken, userloginid, userloginname);
+    setuser(userloginname);
+document.addEventListener("DOMContentLoaded",function(){
+  const userIdElements = document.querySelectorAll('userId')
+  userIdElements.forEach(function(userIdElement) {
+    userIdElement.textContent = userloginid;
+})
+});
   
 
-//     // Check if the tokens match
-//     if (sessionToken === tokenFromUrl) {
-//       console.log("Token is valid. Access granted.");
-//       document.body.style.display = 'block'; // Show content
-//       updateUserDetails(userloginname,userloginid); // Update user details on the page
-//       resetInactivityTimer(); // Start inactivity timer
-//       startSessionExpirationTimer(); // Start session expiration timer
+    // Check if the tokens match
+    if (sessionToken === tokenFromUrl) {
+      console.log("Token is valid. Access granted.");
+      document.body.style.display = 'block'; // Show content
+      updateUserDetails(userloginname,userloginid); // Update user details on the page
+      resetInactivityTimer(); // Start inactivity timer
+      startSessionExpirationTimer(); // Start session expiration timer
 
-//       // Manual logout button event listener
-//       document.getElementById('logoutButton').addEventListener('click', function () {
-//         alert("You have logged out successfully.");
-//         handleLogout();
-//       });
-//     } else {
-//       alert("Invalid token. Access denied.");
-//       handleInvalidToken();
-//     }
-//   } else {
-//     alert("No token provided or session expired. Access denied.");
-//     handleInvalidToken();
-//   }
+      // Manual logout button event listener
+      document.getElementById('logoutButton').addEventListener('click', function () {
+        alert("You have logged out successfully.");
+        handleLogout();
+      });
+    } else {
+      alert("Invalid token. Access denied.");
+      handleInvalidToken();
+    }
+  } else {
+    alert("No token provided or session expired. Access denied.");
+    handleInvalidToken();
+  }
 
-//   // Function to handle invalid tokens
-//   function handleInvalidToken() {
-//     sessionStorage.removeItem('userToken'); // Remove session token on failure
-//     window.location.href = 'login.html'; // Redirect to login page
-//   }
+  // Function to handle invalid tokens
+  function handleInvalidToken() {
+    sessionStorage.removeItem('userToken'); // Remove session token on failure
+    window.location.href = 'login.html'; // Redirect to login page
+  }
 
-//   // Function to update user details on the page
-// // Function to update user details dynamically
-// function updateUserDetails(userloginname, userloginid) {
-//   // Update elements with class "username"
-//   document.querySelectorAll(".username").forEach((el) => {
-//     el.innerHTML = userloginname;
-//   });
+  // Function to update user details on the page
+// Function to update user details dynamically
+function updateUserDetails(userloginname, userloginid) {
+  // Update elements with class "username"
+  document.querySelectorAll(".username").forEach((el) => {
+    el.innerHTML = userloginname;
+  });
 
-//   // Update all input fields with id "userid" dynamically
-//   document.querySelectorAll("#userid").forEach((el) => {
-//     el.value = userloginid;  // Dynamically update the value of each "userid" input field
-//   });
+  // Update all input fields with id "userid" dynamically
+  document.querySelectorAll("#userid").forEach((el) => {
+    el.value = userloginid;  // Dynamically update the value of each "userid" input field
+  });
 
-//   // Update all input fields with id "userId" dynamically (if applicable)
-//   document.querySelectorAll("#userId").forEach((el) => {
-//     el.value = userloginid;  // Dynamically update the value of each "userId" input field
-//   });
-// }
+  // Update all input fields with id "userId" dynamically (if applicable)
+  document.querySelectorAll("#userId").forEach((el) => {
+    el.value = userloginid;  // Dynamically update the value of each "userId" input field
+  });
+}
 
 // // Example usage: after the user logs in or when you have the dynamic user data
 // // let userloginid = "20130059976";  // Example user ID, replace with dynamic data
@@ -1410,6 +1410,7 @@ document.addEventListener('keydown', function (e) {
 
 
 // showBrowserNotification("Reminder", "CA exam study time!", "/icons/reminder.png");
+
 
 
 
